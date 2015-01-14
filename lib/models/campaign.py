@@ -1,11 +1,30 @@
 from lib.models.advertiser_based_model import AdvertiserBasedModel
 from lib.models.profile import Profile
+from lib.models.domain_list import DomainList
 
 
 class Campaign(AdvertiserBasedModel):
 
     obj_name = "campaign"
     profile_obj = None
+
+    def set_domain_lists(self, domain_lists):
+        profile = self.get_profile()
+        domain_targets = []
+        for domain_list in domain_lists:
+            domain_targets.append(domain_list)
+        profile['domain_list_targets'] = domain_targets
+        profile.save()
+
+    def get_domain_lists(self):
+        profile = self.get_profile()
+        list_ids = profile.get('domain_list_targets')
+
+        loader = DomainList(Campaign.connection)
+        rval = []
+        for list_id in list_ids:
+            rval.append(loader.find(list_id.get('id')))
+        return rval
 
     def set_domains(self, domains):
         profile = self.get_profile()

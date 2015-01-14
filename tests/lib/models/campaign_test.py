@@ -2,6 +2,7 @@ import unittest
 import json
 
 from lib.models.campaign import Campaign
+from lib.models.domain_list import DomainList
 from tests.lib.base import Base
 
 
@@ -49,3 +50,19 @@ class CampaignTest(Base):
 
         reloaded_campaign = Campaign(CampaignTest.conn).find_one(470025, 136402)
         assert sorted(reloaded_campaign.get_deals()) == sorted([1999, 1998])
+
+    def testSetDomainList(self):
+
+        campaign = Campaign(CampaignTest.conn).find_one(470025, 136402)
+        domain_list = DomainList(CampaignTest.conn).find(6354)
+        campaign.set_domain_lists([domain_list])
+        campaign.save()
+
+        reloaded_campaign = Campaign(CampaignTest.conn).find_one(470025, 136402)
+        lists = reloaded_campaign.get_domain_lists()
+
+        actual = []
+        for domain in lists[0].get('domains'):
+            actual.append(domain)
+
+        assert sorted(['espn.com', 'cnn.com']) == sorted(actual)

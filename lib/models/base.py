@@ -78,6 +78,7 @@ class Base(dict):
             print "curl -XPOST -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers['Authorization'], payload, url)
             return requests.post(url, headers=headers, data=payload)
         elif method == "PUT":
+            print "curl -XPUT -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers['Authorization'], payload, url)
             return requests.put(url, headers=headers, data=payload)
         elif method == "DELETE":
             return requests.delete(url, headers=headers)

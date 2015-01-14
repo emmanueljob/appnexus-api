@@ -4,7 +4,7 @@ import json
 
 class Connection:
 
-    def __init__(self, username, password, url):
+    def __init__(self, username=None, password=None, url=None):
         Connection.password = password
         Connection.username = username
         Connection.url = url
