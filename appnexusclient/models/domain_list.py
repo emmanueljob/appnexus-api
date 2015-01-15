@@ -1,4 +1,4 @@
-from lib.models.base import Base
+from appnexusclient.lib.models.base import Base
 
 
 class DomainList(Base):
