@@ -1,8 +1,8 @@
 import unittest
 
 from appnexusclient.conf.properties import Properties
-from appnexusclient.lib.service.connection import Connection
-from appnexusclient.test.lib.base import Base
+from appnexusclient.service.connection import Connection
+from tests.base import Base
 
 
 class ConnectionTest(Base):

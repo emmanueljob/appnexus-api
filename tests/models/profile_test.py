@@ -1,8 +1,8 @@
 import unittest
 import json
 
-from appnexusclient.lib.models.profile import Profile
-from appnexusclient.test.lib.base import Base
+from appnexusclient.models.profile import Profile
+from tests.base import Base
 
 
 class ProfileTest(Base):

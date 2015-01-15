@@ -2,8 +2,8 @@ import unittest
 import json
 import random
 
-from appnexusclient.lib.models.domain_list import DomainList
-from appnexusclient.test.lib.base import Base
+from appnexusclient.models.domain_list import DomainList
+from tests.base import Base
 
 
 class DomainListTest(Base):

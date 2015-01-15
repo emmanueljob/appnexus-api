@@ -1,6 +1,6 @@
-from appnexusclient.lib.models.advertiser_based_model import AdvertiserBasedModel
-from appnexusclient.lib.models.profile import Profile
-from appnexusclient.lib.models.domain_list import DomainList
+from appnexusclient.models.advertiser_based_model import AdvertiserBasedModel
+from appnexusclient.models.profile import Profile
+from appnexusclient.models.domain_list import DomainList
 
 
 class Campaign(AdvertiserBasedModel):

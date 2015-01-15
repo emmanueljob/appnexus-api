@@ -1,4 +1,4 @@
-from appnexusclient.lib.models.advertiser_based_model import AdvertiserBasedModel
+from appnexusclient.models.advertiser_based_model import AdvertiserBasedModel
 
 
 class Profile(AdvertiserBasedModel):

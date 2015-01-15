@@ -1,8 +1,8 @@
 import unittest
 import json
 
-from appnexusclient.lib.models.advertiser import Advertiser
-from appnexusclient.test.lib.base import Base
+from appnexusclient.models.advertiser import Advertiser
+from tests.base import Base
 
 
 class AdvertiserTest(Base):

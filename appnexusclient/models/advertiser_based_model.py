@@ -1,4 +1,4 @@
-from appnexusclient.lib.models.base import Base
+from appnexusclient.models.base import Base
 
 
 class AdvertiserBasedModel(Base):
