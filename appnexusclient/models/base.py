@@ -73,6 +73,7 @@ class Base(dict):
         headers = Base.connection.get_authorization()
 
         if method == "GET":
+            print "curl -H 'Authorization: {0}' '{1}'".format(headers['Authorization'], url)
             return requests.get(url, headers=headers)
         elif method == "POST":
             print "curl -XPOST -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers['Authorization'], payload, url)

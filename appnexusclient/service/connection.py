@@ -8,11 +8,10 @@ class Connection:
         Connection.password = password
         Connection.username = username
         Connection.url = url
-        Connection.authorization_token = None
 
     def connect(self):
         headers = []
-        headers.push(Connection.connection.get_authorization())
+        headers.push(Connection.get_authorization())
 
     def get_authorization(self):
         if Connection.authorization_token is None:
