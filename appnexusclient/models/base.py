@@ -69,7 +69,9 @@ class Base(dict):
         return self.get('id')
 
     def _execute(self, method, url, payload):
+        return self._execute_no_reauth(method, url, payload)
 
+    def _execute_no_reauth(self, method, url, payload):
         headers = Base.connection.get_authorization()
 
         if method == "GET":

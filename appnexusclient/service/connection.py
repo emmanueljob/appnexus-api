@@ -4,6 +4,8 @@ import json
 
 class Connection:
 
+    authorization_token = None
+
     def __init__(self, username=None, password=None, url=None):
         Connection.password = password
         Connection.username = username
@@ -35,6 +37,6 @@ class Connection:
             if 'response' in obj and 'status' in obj.get('response') and obj.get('response').get('status') == "OK":
                 Connection.authorization_token = obj.get('response').get('token')
             else:
-                raise Exception('unable to authenticate')
+                raise Exception('unable to authenticate: ' + response.text)
 
         return Connection.authorization_token

@@ -66,3 +66,21 @@ class CampaignTest(Base):
             actual.append(domain)
 
         assert sorted(['espn.com', 'cnn.com']) == sorted(actual)
+
+    def testFindByLineItem(self):
+        loader = Campaign(CampaignTest.conn)
+        campaigns = loader.find_by_line_item(136402, 226154)
+
+        assert len(campaigns) > 2
+
+        for campaign in campaigns:
+            assert campaign.get('line_item_id') == 226154
+
+    def testFindByAdvertiser(self):
+        loader = Campaign(CampaignTest.conn)
+        campaigns = loader.find_by_advertiser(136402)
+
+        assert len(campaigns) > 2
+
+        for campaign in campaigns:
+            assert campaign.get('advertiser_id') == 136402
