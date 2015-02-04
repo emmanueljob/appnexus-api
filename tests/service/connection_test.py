@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from appnexusclient.conf.properties import Properties
@@ -17,5 +18,10 @@ class ConnectionTest(Base):
         assert self.username == "accuen_ct_api_user"
 
     def testConnection(self):
+        token = ConnectionTest.conn.authorize()
+        assert token is not None
+
+    def testConnectionTmpFile(self):
+        Connection.tmp_file = '/tmp/auth_test.txt'
         token = ConnectionTest.conn.authorize()
         assert token is not None

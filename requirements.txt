@@ -2,3 +2,5 @@ requests
 nose
 pyyaml
 pep8
+M2Crypto
+

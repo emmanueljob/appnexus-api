@@ -18,4 +18,6 @@ class Base(unittest.TestCase):
                                password=self.password,
                                url=self.url)
 
+        Connection.tmp_file = '/tmp/test_auth.txt'
+
         super(Base, self).__init__(*args, **kwargs)

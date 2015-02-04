@@ -1,6 +1,8 @@
 import json
 import requests
 
+from ..service.connection import AuthException
+
 
 class Base(dict):
 
@@ -69,24 +71,40 @@ class Base(dict):
         return self.get('id')
 
     def _execute(self, method, url, payload):
-        return self._execute_no_reauth(method, url, payload)
+        result = None
+        try:
+            result = self._execute_no_reauth(method, url, payload)
+        except AuthException as e:
+            # could be an expired auth token, reauth and try again
+            Base.connection.authorize()
+            result = self._execute_no_reauth(method, url, payload)
+
+        return result
 
     def _execute_no_reauth(self, method, url, payload):
         headers = Base.connection.get_authorization()
 
+        result = None
+
         if method == "GET":
             print "curl -H 'Authorization: {0}' '{1}'".format(headers['Authorization'], url)
-            return requests.get(url, headers=headers)
+            result = requests.get(url, headers=headers)
         elif method == "POST":
             print "curl -XPOST -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers['Authorization'], payload, url)
-            return requests.post(url, headers=headers, data=payload)
+            result = requests.post(url, headers=headers, data=payload)
         elif method == "PUT":
             print "curl -XPUT -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers['Authorization'], payload, url)
-            return requests.put(url, headers=headers, data=payload)
+            result = requests.put(url, headers=headers, data=payload)
         elif method == "DELETE":
-            return requests.delete(url, headers=headers)
+            result = requests.delete(url, headers=headers)
         else:
             raise Exception("Unknown method")
+
+        # Unauthorized
+        if result is None or result.status_code == 401:
+            raise AuthException()
+
+        return result
 
     def _get_response_objects(self, response):
         rval = []
@@ -110,8 +128,6 @@ class Base(dict):
             new_obj = self.__class__(Base.connection)
             new_obj.import_props(result)
         else:
-            print "RESULT:"
-            print response.text
             raise Exception("Bad response code")
 
         return new_obj
