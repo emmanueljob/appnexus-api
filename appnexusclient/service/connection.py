@@ -17,6 +17,10 @@ class Connection:
         headers = []
         headers.push(Connection.get_authorization())
 
+    def set_auth_token(self, token):
+        Connection.authorization_token = token
+        self._save_auth_token();
+
     def get_authorization(self):
         if Connection.authorization_token is None:
             if Connection.tmp_file:
@@ -54,11 +58,13 @@ class Connection:
                 raise AuthException('unable to authenticate: ' + response.text)
 
         if Connection.tmp_file is not None:
-            tmp_file = open(Connection.tmp_file, 'w')
-            tmp_file.write(Connection.authorization_token)
+            self._save_auth_token()
 
         return Connection.authorization_token
 
+    def _save_auth_token(self):
+        tmp_file = open(Connection.tmp_file, 'w')
+        tmp_file.write(Connection.authorization_token)
 
 class AuthException(Exception):
     pass

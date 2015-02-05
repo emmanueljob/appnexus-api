@@ -81,19 +81,21 @@ class Base(dict):
 
         return result
 
-    def _execute_no_reauth(self, method, url, payload):
-        headers = Base.connection.get_authorization()
+    def _execute_no_reauth(self, method, url, payload, skip_auth=False):
+        headers = {}
+        if not skip_auth:
+            headers = Base.connection.get_authorization()
 
         result = None
 
         if method == "GET":
-            print "curl -H 'Authorization: {0}' '{1}'".format(headers['Authorization'], url)
+            print "curl -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url)
             result = requests.get(url, headers=headers)
         elif method == "POST":
-            print "curl -XPOST -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers['Authorization'], payload, url)
+            print "curl -XPOST -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers.get('Authorization', ''), payload, url)
             result = requests.post(url, headers=headers, data=payload)
         elif method == "PUT":
-            print "curl -XPUT -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers['Authorization'], payload, url)
+            print "curl -XPUT -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers.get('Authorization', ''), payload, url)
             result = requests.put(url, headers=headers, data=payload)
         elif method == "DELETE":
             result = requests.delete(url, headers=headers)
@@ -116,7 +118,7 @@ class Base(dict):
                 new_obj.import_props(result)
                 rval.append(new_obj)
         else:
-            raise Exception("Bad response code")
+            raise Exception("Bad response code" + response.text)
 
         return rval
 
@@ -128,7 +130,7 @@ class Base(dict):
             new_obj = self.__class__(Base.connection)
             new_obj.import_props(result)
         else:
-            raise Exception("Bad response code")
+            raise Exception("Bad response code " + response.text)
 
         return new_obj
 
