@@ -14,6 +14,7 @@ class Campaign(AdvertiserBasedModel):
         for domain_list in domain_lists:
             domain_targets.append(domain_list)
         profile['domain_list_targets'] = domain_targets
+        profile['domain_list_action'] = "include"
         profile.save()
 
     def get_domain_lists(self):
