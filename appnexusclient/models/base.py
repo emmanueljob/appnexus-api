@@ -90,7 +90,7 @@ class Base(dict):
         result = None
 
         if method == "GET":
-            url = "{0}&start_element={1}&num_elements{1}"
+            url = "{0}&start_element={1}&num_elements{2}".format(url, start_element, num_elements)
             print "curl -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url)
             result = requests.get(url, headers=headers)
         elif method == "POST":
