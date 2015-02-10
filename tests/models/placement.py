@@ -13,7 +13,7 @@ class PlacementTest(Base):
         placement['publisher_id'] = 169322
         result = placement.create()
         assert result == placement.get('id')
-        
+
     def testGet(self):
         loader = Placement(PlacementTest.conn)
         placements = loader.find()

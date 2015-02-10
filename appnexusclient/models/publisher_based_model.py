@@ -23,4 +23,3 @@ class PublisherBasedModel(Base):
             results = self._get_response_objects(response)
 
         return results
-        

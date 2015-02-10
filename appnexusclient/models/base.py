@@ -2,6 +2,7 @@ import json
 import requests
 
 from ..service.connection import AuthException
+from ..utility.appnexus_list import AppnexusList
 
 
 class Base(dict):
@@ -109,9 +110,10 @@ class Base(dict):
         return result
 
     def _get_response_objects(self, response):
-        rval = []
+        rval = AppnexusList()
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
+            rval.set_count(obj.get('response').get('count'))
             results = obj.get('response').get('{0}s'.format(self.obj_name))
             for result in results:
                 new_obj = self.__class__(Base.connection)

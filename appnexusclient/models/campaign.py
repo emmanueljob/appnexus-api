@@ -82,4 +82,3 @@ class Campaign(AdvertiserBasedModel):
             results = self._get_response_objects(response)
 
         return results
-        

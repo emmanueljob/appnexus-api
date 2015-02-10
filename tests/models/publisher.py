@@ -12,7 +12,6 @@ class PublisherTest(Base):
         publisher['name'] = 'publisher test from python test'
         result = publisher.create()
         assert result == publisher.get('id')
-        
 
     def testGet(self):
         loader = Publisher(PublisherTest.conn)

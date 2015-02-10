@@ -2,6 +2,7 @@ import json
 import os
 import requests
 
+
 class Connection:
 
     authorization_token = None
@@ -19,7 +20,7 @@ class Connection:
 
     def set_auth_token(self, token):
         Connection.authorization_token = token
-        self._save_auth_token();
+        self._save_auth_token()
 
     def get_authorization(self):
         if Connection.authorization_token is None:
@@ -41,7 +42,6 @@ class Connection:
                 "password": Connection.password
             }
         }
-
 
         try:
             response = requests.post(auth_url, data=json.dumps(credentials))
@@ -65,6 +65,7 @@ class Connection:
     def _save_auth_token(self):
         tmp_file = open(Connection.tmp_file, 'w')
         tmp_file.write(Connection.authorization_token)
+
 
 class AuthException(Exception):
     pass
