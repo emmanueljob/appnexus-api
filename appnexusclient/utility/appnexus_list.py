@@ -1,13 +1,13 @@
 
 
 class AppnexusList(list):
-    count = 0
+    _count = 0
 
     def count(self):
-        return self.count
+        return self._count
 
     def set_count(self, count):
-        self.count = count
+        self._count = count
 
     def __len__(self):
-        return self.count
+        return self._count

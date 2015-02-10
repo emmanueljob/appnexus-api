@@ -27,11 +27,11 @@ class Base(dict):
 
     def find(self, id=None, start_element=0, num_elements=100):
         if id is None:
-            response = self._execute("GET", self.get_url(), None, start_element, num_elements)
+            response = self._execute("GET", self.get_url(), None, start_element=start_element, num_elements=num_elements)
 
             rval = []
             if response:
-                rval = self._get_response_objects(response, start_element)
+                rval = self._get_response_objects(response)
             return rval
         else:
             response = self._execute("GET", self.get_find_url(id), None)
@@ -74,7 +74,7 @@ class Base(dict):
     def _execute(self, method, url, payload, start_element=0, num_elements=100):
         result = None
         try:
-            result = self._execute_no_reauth(method, url, payload, start_element, num_elements)
+            result = self._execute_no_reauth(method, url, payload, False, start_element, num_elements)
         except AuthException as e:
             # could be an expired auth token, reauth and try again
             Base.connection.authorize()
@@ -90,7 +90,11 @@ class Base(dict):
         result = None
 
         if method == "GET":
-            url = "{0}&start_element={1}&num_elements{2}".format(url, start_element, num_elements)
+            if start_element is not None:
+                if '?' in url:
+                    url = "{0}&start_element={1}&num_elements={2}".format(url, start_element, num_elements)
+                else:
+                    url = "{0}?start_element={1}&num_elements={2}".format(url, start_element, num_elements)
             print "curl -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url)
             result = requests.get(url, headers=headers)
         elif method == "POST":
@@ -110,18 +114,17 @@ class Base(dict):
 
         return result
 
-    def _get_response_objects(self, response, start_element=0):
-        rval = AppnexusList()
-        index = start_element
+    def _get_response_objects(self, response):
+        rval = []
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
+            rval = AppnexusList()
             rval.set_count(obj.get('response').get('count'))
             results = obj.get('response').get('{0}s'.format(self.obj_name))
             for result in results:
                 new_obj = self.__class__(Base.connection)
                 new_obj.import_props(result)
-                rval[index] = new_obj
-                index += 1
+                rval.append(new_obj)
         else:
             raise Exception("Bad response code" + response.text)
 

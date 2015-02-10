@@ -14,7 +14,7 @@ class AdvertiserBasedModel(Base):
         return "{0}?id={1}&advertiser_id={2}".format(self.get_url(), id, self.get('advertiser_id'))
 
     def find_by_advertiser(self, advertiser_id, start_element=0, num_elements=100):
-        url = "{0}?&advertiser_id={1}".format(self.get_url(), advertiser_id)
+        url = "{0}?&advertiser_id={1}&start_element={2}&num_elements={3}".format(self.get_url(), advertiser_id, start_element, num_elements)
 
         response = self._execute("GET", url, None)
 

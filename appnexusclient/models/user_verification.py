@@ -39,7 +39,7 @@ bNjshItHyt2k0Q==
         return "{0}?user_token={1}".format(self.get_url(), id)
 
     def get_user_id(self, id):
-        response = self._execute_no_reauth("GET", self.get_token_url(id), None, skip_auth=True)
+        response = self._execute_no_reauth("GET", self.get_token_url(id), None, skip_auth=True, start_element=None)
 
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
@@ -67,6 +67,6 @@ bNjshItHyt2k0Q==
         if obj.get('response').get('status') == "OK":
             pass
         else:
-            raise Exception("Bad response code")
+            raise Exception("Bad response code " + response.text)
 
         return obj.get('response').get('token')
