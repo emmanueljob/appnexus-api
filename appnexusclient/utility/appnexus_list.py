@@ -10,4 +10,4 @@ class AppnexusList(list):
         self.count = count
 
     def __len__(self):
-        return self.count()
+        return self.count

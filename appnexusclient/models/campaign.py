@@ -72,13 +72,13 @@ class Campaign(AdvertiserBasedModel):
 
         return self.profile_obj
 
-    def find_by_line_item(self, advertiser_id, line_item_id):
+    def find_by_line_item(self, advertiser_id, line_item_id, start_element=0, num_elements=100):
         url = "{0}?advertiser_id={1}&line_item_id={2}".format(self.get_url(), advertiser_id, line_item_id)
 
-        response = self._execute("GET", url, None)
+        response = self._execute("GET", url, None, start_element, num_elements)
 
         results = []
         if response:
-            results = self._get_response_objects(response)
+            results = self._get_response_objects(response, start_element)
 
         return results

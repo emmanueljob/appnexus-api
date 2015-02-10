@@ -25,13 +25,13 @@ class Base(dict):
     def get_find_url(self, id):
         return "{0}?id={1}".format(self.get_url(), id)
 
-    def find(self, id=None):
+    def find(self, id=None, start_element=0, num_elements=100):
         if id is None:
-            response = self._execute("GET", self.get_url(), None)
+            response = self._execute("GET", self.get_url(), None, start_element, num_elements)
 
             rval = []
             if response:
-                rval = self._get_response_objects(response)
+                rval = self._get_response_objects(response, start_element)
             return rval
         else:
             response = self._execute("GET", self.get_find_url(id), None)
@@ -71,10 +71,10 @@ class Base(dict):
 
         return self.get('id')
 
-    def _execute(self, method, url, payload):
+    def _execute(self, method, url, payload, start_element=0, num_elements=100):
         result = None
         try:
-            result = self._execute_no_reauth(method, url, payload)
+            result = self._execute_no_reauth(method, url, payload, start_element, num_elements)
         except AuthException as e:
             # could be an expired auth token, reauth and try again
             Base.connection.authorize()
@@ -82,7 +82,7 @@ class Base(dict):
 
         return result
 
-    def _execute_no_reauth(self, method, url, payload, skip_auth=False):
+    def _execute_no_reauth(self, method, url, payload, skip_auth=False, start_element=0, num_elements=100):
         headers = {}
         if not skip_auth:
             headers = Base.connection.get_authorization()
@@ -90,6 +90,7 @@ class Base(dict):
         result = None
 
         if method == "GET":
+            url = "{0}&start_element={1}&num_elements{1}"
             print "curl -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url)
             result = requests.get(url, headers=headers)
         elif method == "POST":
@@ -109,8 +110,9 @@ class Base(dict):
 
         return result
 
-    def _get_response_objects(self, response):
+    def _get_response_objects(self, response, start_element=0):
         rval = AppnexusList()
+        index = start_element
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
             rval.set_count(obj.get('response').get('count'))
@@ -118,7 +120,8 @@ class Base(dict):
             for result in results:
                 new_obj = self.__class__(Base.connection)
                 new_obj.import_props(result)
-                rval.append(new_obj)
+                rval[index] = new_obj
+                index += 1
         else:
             raise Exception("Bad response code" + response.text)
 
