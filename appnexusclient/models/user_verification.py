@@ -47,7 +47,7 @@ class UserVerification(Base):
         encrypted = rsakey.private_encrypt(message, M2Crypto.RSA.pkcs1_padding)
         data = base64.b64encode(encrypted)
 
-        payload = {'user_id': user_id, 'plugin_id': self.plugin_id, 'signature': data}
+        payload = {'user_id': user_id, 'plugin_id': plugin_id, 'signature': data}
         url = '{0}/auth'.format(UserVerification.connection.url)
         response = requests.get(url, params=payload)
 
