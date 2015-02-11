@@ -15,7 +15,7 @@ class ConnectionTest(Base):
         pass
 
     def testGetProps(self):
-        assert self.username == "accuen_ct_api_user"
+        assert self.username == "emmanuel.job@accuenmedia.com"
 
     def testConnection(self):
         token = ConnectionTest.conn.authorize()
