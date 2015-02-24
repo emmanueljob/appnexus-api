@@ -43,6 +43,22 @@ class Campaign(AdvertiserBasedModel):
                 rval.append(domain['domain'])
         return rval
 
+    def set_member_targets(self, member_targets):
+        profile = self.get_profile()
+        member_targets = []
+        for member_target in member_targets:
+            member_targets.append({'id': member_target, 'action': 'include'})
+        profile['member_targets'] = member_targets
+        profile.save()
+
+    def get_member_targets(self):
+        rval = []
+        profile = self.get_profile()
+        if profile.get('member_targets'):
+            for member_target in profile.get('member_targets'):
+                rval.append(member_target['id'])
+        return rval
+
     def set_deals(self, deals):
         profile = self.get_profile()
         deal_targets = []
