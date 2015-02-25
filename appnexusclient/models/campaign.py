@@ -45,10 +45,10 @@ class Campaign(AdvertiserBasedModel):
 
     def set_member_targets(self, member_targets):
         profile = self.get_profile()
-        member_targets = []
+        target_objects = []
         for member_target in member_targets:
-            member_targets.append({'id': member_target, 'action': 'include'})
-        profile['member_targets'] = member_targets
+            target_objects.append({'id': member_target, 'action': 'include'})
+        profile['member_targets'] = target_objects
         profile.save()
 
     def get_member_targets(self):
