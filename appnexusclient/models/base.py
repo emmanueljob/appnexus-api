@@ -118,8 +118,7 @@ class Base(dict):
         rval = []
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
-            rval = AppnexusList()
-            rval.set_count(obj.get('response').get('count'))
+            rval = []
             results = obj.get('response').get('{0}s'.format(self.obj_name))
             for result in results:
                 new_obj = self.__class__(Base.connection)
