@@ -20,9 +20,6 @@ class Report(Base):
             raise Exception("Bad response code " + response.text)
         return report_id
 
-    def ready(self):
-        
-
     def get_download_url(self, id):
         url = "{0}?id={1}".format(self.get_url(), id)
         response = self._execute("GET", url, None)
