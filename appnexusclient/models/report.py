@@ -20,19 +20,21 @@ class Report(Base):
             raise Exception("Bad response code " + response.text)
         return report_id
 
+    def ready(self):
+        
+
     def get_download_url(self, id):
         url = "{0}?id={1}".format(self.get_url(), id)
         response = self._execute("GET", url, None)
-        print response.text
         obj = json.loads(response.text)
-        url = None
+        download_url = None
         if obj.get('response').get('status') == "OK":
             status = obj.get('response').get('execution_status')
             if status == "ready":
-                url = obj.get('response').get('report').get('url')
+                download_url = obj.get('response').get('report').get('url')
         else:
             raise Exception("Bad response code " + response.text)
-        return url
+        return download_url
         
     def download(self, url, local_filename):
         url = "{0}/{1}".format(Report.connection.url, url)

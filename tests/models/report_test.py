@@ -40,7 +40,7 @@ class ReportTest(Base):
             "placement_id",
             "creative_id"
         ],
-        "report_interval":"last_30_days",
+        "report_interval":"last_7_days",
         "format":"csv"
     }
 }
@@ -48,16 +48,18 @@ class ReportTest(Base):
 
         report_id = loader.run_report(params)
         assert report_id != None
+        print report_id
 
     def testGetDownloadUrl(self):
         loader = Report(ReportTest.conn)
-        id = "889d128e9acb6f14d2bf7863f0566a04"
+        id = "4f283b5ed25d8aee2e4d0fc16597aef9"
         url = loader.get_download_url(id)
-        assert "report-download" in url
+        assert url != None
+        print url
         
     def testDownload(self):
         loader = Report(ReportTest.conn)
-        url = "report-download?id=889d128e9acb6f14d2bf7863f0566a04"
+        url = "report-download?id=4f283b5ed25d8aee2e4d0fc16597aef9"
         result = loader.download(url, '/tmp/appnexus_test.csv')
         assert result == True
         
