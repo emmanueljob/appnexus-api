@@ -11,7 +11,6 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "geerlingguy/ubuntu1204"
   config.vm.synced_folder ".", "/home/vagrant/appnexus-api"
-  config.vm.synced_folder "~/secrets", "/home/vagrant/secrets"
 
   # Assess system RAM and CPU cores, and provision the VM with the largest reasonable resources
   # We take half of the ram, and all but 1 of the cores

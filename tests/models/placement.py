@@ -19,3 +19,13 @@ class PlacementTest(Base):
         placements = loader.find()
         for placement in placements:
             assert placement.get('id') is not None
+
+    def testAddDefaultCreative(self):
+        creative_id = 44122731
+        placement_id = 1072380
+        publisher_id = 155313
+        loader = Placement(PlacementTest.conn)
+        placement = loader.find_one(placement_id, publisher_id)
+        placement['default_creatives'] = [{"id": creative_id, "width": 120, "height": 600}]
+        placement.save()
+
