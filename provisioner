@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#
+# Provision a new virtual machine for Appnexus API development
+# Used by Vagrant
+#
+
+# --------------------
+echo "Starting provision"
+# --------------------
+echo "Chown all appnexus_api files to vagrant:vagrant"
+chown -R vagrant:vagrant ~/appnexus-api
+# --------------------
+echo "Updating Ubuntu"
+sudo apt-get -y update
+sudo apt-get -y upgrade
+# --------------------
+echo "Install packages required to run the Appnexus API"
+sudo apt-get install -y python-dev
+sudo apt-get install -y python-setuptools
+sudo apt-get install -y python-virtualenv
+sudo apt-get install -y git
+# --------------------
+echo "Installing virtualenv"
+sudo pip install virtualenv
+# --------------------
+echo "Configuring virtualenv"
+mkdir ~/virtualenvs
+cd ~/virtualenvs
+virtualenv appnexusapi_virtualenv
+source ~/virtualenvs/appnexusapi_virtualenv/bin/activate
+# --------------------
+echo "Provision successful"
+echo ""
+echo ""
+echo "To run the app:"
+echo "   1) vagrant ssh"
+echo "   2) source ~/virtualenvs/appnexusapi_virtualenv/bin/activate"
+# --------------------
