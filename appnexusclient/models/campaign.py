@@ -59,6 +59,15 @@ class Campaign(AdvertiserBasedModel):
                 rval.append(member_target['id'])
         return rval
 
+    def set_placement_targets(self, placement_targets):
+        profile = self.get_profile()
+        target_objects = []
+        for placement_target in placement_targets:
+            target_objects.append({'id': placement_target})
+        profile['placement_targets'] = target_objects
+        profile['inventory_action'] = 'include'
+        profile.save()
+
     def set_deals(self, deals):
         profile = self.get_profile()
         deal_targets = []
