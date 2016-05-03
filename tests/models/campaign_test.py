@@ -84,3 +84,14 @@ class CampaignTest(Base):
 
         for campaign in campaigns:
             assert campaign.get('advertiser_id') == 136402
+
+
+    def testGetById(self):
+        advertiser_id = 454980
+        campaign_id = 11862543
+        loader = Campaign(CampaignTest.conn)
+        campaign = loader.find_one(campaign_id, advertiser_id)
+        print campaign
+        print "!!!!!"
+        assert campaign_id == campaign.get('id')
+

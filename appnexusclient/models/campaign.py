@@ -66,6 +66,7 @@ class Campaign(AdvertiserBasedModel):
             target_objects.append({'id': placement_target})
         profile['placement_targets'] = target_objects
         profile['inventory_action'] = 'include'
+        profile['allow_unaudited'] = True
         profile.save()
 
     def set_deals(self, deals):

@@ -22,8 +22,9 @@ class ProfileTest(Base):
             assert profile.get('id') is not None
 
     def testGetById(self):
-        profile_id = 423662
-        advertiser_id = 136402
+        profile_id = 50161408
+        advertiser_id = 454980
         loader = Profile(ProfileTest.conn)
         profile = loader.find_one(profile_id, advertiser_id)
+        print profile
         assert profile_id == profile.get('id')
