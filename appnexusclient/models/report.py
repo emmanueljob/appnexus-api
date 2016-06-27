@@ -8,8 +8,7 @@ class Report(Base):
 
     obj_name = "report"
     
-    def run_report(self, params):
-        pub_id = "720189"
+    def run_report(self, params, pub_id):
         url = "{0}?publisher_id={1}".format(self.get_url(), pub_id)
         response = self._execute("POST", url, params)
         obj = json.loads(response.text)
