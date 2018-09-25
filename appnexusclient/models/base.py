@@ -115,6 +115,22 @@ class Base(dict):
         return result
 
     def _get_response_objects(self, response):
+        obj = json.loads(response.text)
+        rval = {}
+        rval["response_code"] = response.status_code
+        if obj.get('response').get('status') == "OK":
+            rval["msg_type"] = "success"
+            rval["msg"] = ""
+            rval["data"] = obj
+            rval["request_body"] = ""
+        else:
+            rval["msg_type"] = "error"
+            rval["msg"] = ""
+            rval["data"] = obj
+
+        return json.dumps(rval)
+    """
+    def _get_response_objects(self, response):
         rval = []
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
@@ -128,7 +144,24 @@ class Base(dict):
             raise Exception("Bad response code" + response.text)
 
         return rval
+    """
 
+    def _get_response_object(self, response):
+        obj = json.loads(response.text)
+        rval = {}
+        rval["response_code"] = response.status_code
+        if obj.get('response').get('status') == "OK":
+            rval["msg_type"] = "success"
+            rval["msg"] = ""
+            rval["data"] = obj
+            rval["request_body"] = ""
+        else:
+            rval["msg_type"] = "error"
+            rval["msg"] = ""
+            rval["data"] = obj
+
+        return json.dumps(rval)
+    """
     def _get_response_object(self, response):
         obj = json.loads(response.text)
         new_obj = None
@@ -140,6 +173,7 @@ class Base(dict):
             raise Exception("Bad response code " + response.text)
 
         return new_obj
+    """
 
     def import_props(self, props):
         for key, value in props.iteritems():
