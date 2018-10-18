@@ -25,6 +25,9 @@ class Base(dict):
     def get_find_url(self, id):
         return "{0}?id={1}".format(self.get_url(), id)
 
+    def get_save_url(self, obj_id, advertiser_id):
+        return "{0}?id={1}&advertiser_id={2}".format(self.get_url(), obj_id, advertiser_id)
+
     def find(self, id=None, start_element=0, num_elements=100):
         if id is None:
             response = self._execute("GET", self.get_url(), None, start_element=start_element, num_elements=num_elements)
@@ -42,14 +45,9 @@ class Base(dict):
                 return None
 
     def create(self):
-        if id in self:
-            del self['id']
-
         response = self._execute("POST", self.get_create_url(), json.dumps({self.obj_name: self.export_props()}))
         obj = self._get_response_object(response)
-        self.import_props(obj)
-
-        return self.get('id')
+        return obj
 
     def delete(self):
         response = self._execute("POST", self.get_find_url(self.id), None)
@@ -61,15 +59,14 @@ class Base(dict):
 
         return True
 
-    def save(self):
-        if self.get('id') is None or self.get('id') == 0:
-            raise Exception("cant update an object with no id")
+    def save(self, data):
+        payload = {
+            self.obj_name: data
+        }
 
-        response = self._execute("PUT", self.get_find_url(self.get('id')), json.dumps({self.obj_name: self.export_props()}))
+        response = self._execute("PUT", self.get_save_url(data.get('id'), data.get('advertiser_id')), json.dumps(payload))
         obj = self._get_response_object(response)
-        self.import_props(obj)
-
-        return self.get('id')
+        return obj
 
     def _execute(self, method, url, payload, start_element=0, num_elements=100):
         result = None
@@ -115,6 +112,22 @@ class Base(dict):
         return result
 
     def _get_response_objects(self, response):
+        obj = json.loads(response.text)
+        rval = {}
+        rval["response_code"] = response.status_code
+        if obj.get('response').get('status') == "OK":
+            rval["msg_type"] = "success"
+            rval["msg"] = ""
+            rval["data"] = obj
+            rval["request_body"] = ""
+        else:
+            rval["msg_type"] = "error"
+            rval["msg"] = ""
+            rval["data"] = obj
+
+        return json.dumps(rval)
+    """
+    def _get_response_objects(self, response):
         rval = []
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
@@ -128,7 +141,24 @@ class Base(dict):
             raise Exception("Bad response code" + response.text)
 
         return rval
+    """
 
+    def _get_response_object(self, response):
+        obj = json.loads(response.text)
+        rval = {}
+        rval["response_code"] = response.status_code
+        if obj.get('response').get('status') == "OK":
+            rval["msg_type"] = "success"
+            rval["msg"] = ""
+            rval["data"] = obj
+            rval["request_body"] = ""
+        else:
+            rval["msg_type"] = "error"
+            rval["msg"] = ""
+            rval["data"] = obj
+
+        return json.dumps(rval)
+    """
     def _get_response_object(self, response):
         obj = json.loads(response.text)
         new_obj = None
@@ -140,6 +170,7 @@ class Base(dict):
             raise Exception("Bad response code " + response.text)
 
         return new_obj
+    """
 
     def import_props(self, props):
         for key, value in props.iteritems():
