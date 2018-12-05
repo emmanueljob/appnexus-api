@@ -23,6 +23,7 @@ class Connection:
         self._save_auth_token()
 
     def get_authorization(self):
+        """
         if Connection.authorization_token is None:
             if Connection.tmp_file:
                 # try using the auth token we have saved.
@@ -31,6 +32,8 @@ class Connection:
                     Connection.authorization_token = tmp_file.read()
             else:
                 Connection.authorization_token = self.authorize()
+        """
+        Connection.authorization_token = self.authorize()
 
         return {'Authorization': Connection.authorization_token}
 
