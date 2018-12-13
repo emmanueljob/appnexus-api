@@ -86,6 +86,8 @@ class Campaign(AdvertiserBasedModel):
         return rval
 
     def get_profile(self):
+        self.profile_obj = Profile(Campaign.connection).find_one(self.data.get('profile_id'), self.data.get('advertiser_id'))
+        """
         if self.get('profile_id') > 0:
             if self.profile_obj is None:
                 self.profile_obj = Profile(Campaign.connection).find_one(self.get('profile_id'), self.get('advertiser_id'))
@@ -95,6 +97,7 @@ class Campaign(AdvertiserBasedModel):
             new_profile.create()
             self.profile_obj = new_profile
             self['profile_id'] = new_profile.get('id')
+        """
 
         return self.profile_obj
 
