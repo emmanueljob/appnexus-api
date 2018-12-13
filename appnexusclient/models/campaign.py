@@ -1,3 +1,5 @@
+import json
+
 from appnexusclient.models.advertiser_based_model import AdvertiserBasedModel
 from appnexusclient.models.profile import Profile
 from appnexusclient.models.domain_list import DomainList
@@ -86,7 +88,7 @@ class Campaign(AdvertiserBasedModel):
         return rval
 
     def get_profile(self):
-        self.profile_obj = Profile(Campaign.connection).find_one(self.data.get('profile_id'), self.data.get('advertiser_id'))
+        self.profile_obj = json.loads(Profile(Campaign.connection).find_one(self.data.get('profile_id'), self.data.get('advertiser_id')))
         """
         if self.get('profile_id') > 0:
             if self.profile_obj is None:
