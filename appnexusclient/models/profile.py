@@ -15,6 +15,7 @@ class Profile(AdvertiserBasedModel):
         self.data['domain_list_targets'] = domain_targets
         self.data['domain_list_action'] = "include"
 
+    """
     def get_domain_lists(self):
         list_ids = profile.get('domain_list_targets')
 
@@ -23,6 +24,7 @@ class Profile(AdvertiserBasedModel):
         for list_id in list_ids:
             rval.append(loader.find(list_id.get('id')))
         return rval
+    """
 
     def set_domains(self, domains):
         domain_targets = []

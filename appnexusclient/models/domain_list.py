@@ -12,10 +12,7 @@ class DomainList(Base):
         if response:
             results = self._get_response_objects(response)
 
-        if len(results) > 0:
-            return results[0]
-        else:
-            return None
+        return results
 
     def get_search_url(self, term):
         return "{0}?search={1}".format(self.get_url(), term)
