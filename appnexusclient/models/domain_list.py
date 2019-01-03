@@ -4,7 +4,7 @@ from appnexusclient.models.base import Base
 class DomainList(Base):
     """
     !!!!!!!!!!!!!!!!!!!!!!!!!!
-    DEPRECATED PER APPNEXUS - See InventoryList()
+    DO NOT USE IN A.L.I. - See InventoryList()
     !!!!!!!!!!!!!!!!!!!!!!!!!!
     """
 

@@ -36,7 +36,7 @@ class InventoryListItem(Base):
 
     def save(self, data):
         payload = {
-            self.data["inventory-list-items"]
+            "inventory-list-items": self.data.get("inventory-list-items")
         }
 
         response = self._execute("PUT", self.get_save_url(data.get('id')), json.dumps(payload))
