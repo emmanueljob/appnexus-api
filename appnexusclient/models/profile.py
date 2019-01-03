@@ -7,6 +7,17 @@ class Profile(AdvertiserBasedModel):
 
     obj_name = "profile"
 
+    def set_inventory_lists(self, lists):
+        targets = []
+        for id in lists:
+            item = {
+                "id": id
+            }
+            targets.append(item)
+
+        self.data['inventory_url_list_targets'] = targets
+
+    """
     def set_domain_lists(self, domain_lists):
         domain_targets = []
         for domain_list in domain_lists:
@@ -14,6 +25,7 @@ class Profile(AdvertiserBasedModel):
 
         self.data['domain_list_targets'] = domain_targets
         self.data['domain_list_action'] = "include"
+    """
 
     """
     def get_domain_lists(self):

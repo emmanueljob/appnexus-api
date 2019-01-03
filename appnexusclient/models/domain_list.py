@@ -2,6 +2,11 @@ from appnexusclient.models.base import Base
 
 
 class DomainList(Base):
+    """
+    !!!!!!!!!!!!!!!!!!!!!!!!!!
+    DEPRECATED PER APPNEXUS - See InventoryList()
+    !!!!!!!!!!!!!!!!!!!!!!!!!!
+    """
 
     obj_name = "domain-list"
 
