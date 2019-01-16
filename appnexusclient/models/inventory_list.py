@@ -1,14 +1,9 @@
 from appnexusclient.models.base import Base
 
 
-class DomainList(Base):
-    """
-    !!!!!!!!!!!!!!!!!!!!!!!!!!
-    DO NOT USE IN A.L.I. - See InventoryList()
-    !!!!!!!!!!!!!!!!!!!!!!!!!!
-    """
+class InventoryList(Base):
 
-    obj_name = "domain-list"
+    obj_name = "inventory-list"
 
     def find_by_name(self, name):
         response = self._execute("GET", self.get_search_url(name), None)

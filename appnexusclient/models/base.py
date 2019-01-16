@@ -12,7 +12,8 @@ class Base(dict):
     # Needs to be defined in the subclass
     obj_name = None
 
-    def __init__(self, connection):
+    def __init__(self, connection, data=None):
+        self.data = data
         Base.connection = connection
         super(Base, self).__init__()
 
@@ -126,22 +127,6 @@ class Base(dict):
             rval["data"] = obj
 
         return json.dumps(rval)
-    """
-    def _get_response_objects(self, response):
-        rval = []
-        obj = json.loads(response.text)
-        if obj.get('response').get('status') == "OK":
-            rval = []
-            results = obj.get('response').get('{0}s'.format(self.obj_name))
-            for result in results:
-                new_obj = self.__class__(Base.connection)
-                new_obj.import_props(result)
-                rval.append(new_obj)
-        else:
-            raise Exception("Bad response code" + response.text)
-
-        return rval
-    """
 
     def _get_response_object(self, response):
         obj = json.loads(response.text)
@@ -158,19 +143,6 @@ class Base(dict):
             rval["data"] = obj
 
         return json.dumps(rval)
-    """
-    def _get_response_object(self, response):
-        obj = json.loads(response.text)
-        new_obj = None
-        if obj.get('response').get('status') == "OK":
-            result = obj.get('response').get(self.obj_name)
-            new_obj = self.__class__(Base.connection)
-            new_obj.import_props(result)
-        else:
-            raise Exception("Bad response code " + response.text)
-
-        return new_obj
-    """
 
     def import_props(self, props):
         for key, value in props.iteritems():
