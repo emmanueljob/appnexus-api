@@ -16,3 +16,4 @@ class InsertionOrder(AdvertiserBasedModel):
                 return self._get_response_objects(response)
             else:
                 return None
+

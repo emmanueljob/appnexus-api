@@ -39,7 +39,7 @@ class InventoryListItem(Base):
             "inventory-list-items": self.data.get("inventory-list-items")
         }
 
-        response = self._execute("POST", self.get_save_url(data.get('id')), json.dumps(payload))
+        response = self._execute("POST", self.get_save_url(self.data.get('id')), json.dumps(payload))
         obj = self._get_response_object(response)
         return obj
 
