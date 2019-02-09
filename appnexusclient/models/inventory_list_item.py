@@ -34,11 +34,12 @@ class InventoryListItem(Base):
     def get_search_url(self, id, term):
         return "{0}/{1}/item?search={2}".format(self.get_url(), id, term)
 
-    def save(self, data):
+    def save(self):
         payload = {
             "inventory-list-items": self.data.get("inventory-list-items")
         }
 
-        response = self._execute("PUT", self.get_save_url(data.get('id')), json.dumps(payload))
+        response = self._execute("POST", self.get_save_url(data.get('id')), json.dumps(payload))
         obj = self._get_response_object(response)
         return obj
+
