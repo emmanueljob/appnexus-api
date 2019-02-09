@@ -1,9 +1,9 @@
 from appnexusclient.models.advertiser_based_model import AdvertiserBasedModel
 
 
-class LineItem(AdvertiserBasedModel):
+class InsertionOrder(AdvertiserBasedModel):
 
-    obj_name = "line-item"
+    obj_name = "insertion-order"
 
     def find_by_advertiser(self, advertiser_id=None):
         if advertiser_id is None:
