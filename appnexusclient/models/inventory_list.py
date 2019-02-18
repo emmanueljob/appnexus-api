@@ -29,7 +29,7 @@ class InventoryList(Base):
         return "{0}?search={1}".format(self.get_url(), term)
 
     def delete(self):
-        response = self._execute("DELETE", "{0}?inventory_url_list_id={1}".format(self.get_url(), id), None)
+        response = self._execute("DELETE", "{0}?id={1}".format(self.get_url(), self.data.get('id')), None)
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
             pass
