@@ -102,6 +102,7 @@ class Base(dict):
             print "curl -XPUT -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers.get('Authorization', ''), payload, url)
             result = requests.put(url, headers=headers, data=payload)
         elif method == "DELETE":
+            print "curl -XDELETE -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url)
             result = requests.delete(url, headers=headers)
         else:
             raise Exception("Unknown method")
