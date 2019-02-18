@@ -51,7 +51,7 @@ class Base(dict):
         return obj
 
     def delete(self):
-        response = self._execute("POST", self.get_find_url(self.id), None)
+        response = self._execute("DELETE", self.get_find_url(self.id), None)
         obj = json.loads(response.text)
         if obj.get('response').get('status') == "OK":
             pass

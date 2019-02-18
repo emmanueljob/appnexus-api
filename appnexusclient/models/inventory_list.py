@@ -14,5 +14,24 @@ class InventoryList(Base):
 
         return results
 
+    def find_by_id(self, id):
+        response = self._execute("GET", "{0}?inventory_url_list_id={1}".format(self.get_url(), id), None)
+
+        results = []
+        if response:
+            results = self._get_response_objects(response)
+
+        return results
+
     def get_search_url(self, term):
         return "{0}?search={1}".format(self.get_url(), term)
+
+    def delete(self):
+        response = self._execute("DELETE", "{0}?inventory_url_list_id={1}".format(self.get_url(), id), None)
+        obj = json.loads(response.text)
+        if obj.get('response').get('status') == "OK":
+            pass
+        else:
+            raise Exception("Bad response code")
+
+        return True
