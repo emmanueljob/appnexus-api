@@ -1,3 +1,5 @@
+import json
+
 from appnexusclient.models.base import Base
 
 
