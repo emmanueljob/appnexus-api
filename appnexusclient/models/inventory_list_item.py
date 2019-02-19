@@ -17,28 +17,28 @@ class InventoryListItem(Base):
             }
             self.data["inventory-list-items"].append(row)
 
-    def set_apps(self, apps):
-        if "inventory-list-items" not in self.data:
-            self.data["inventory-list-items"] = []
-
-        for app in apps:
-            row = {
-                "url": app,
-                "include_children": False
-            }
-            self.data["inventory-list-items"].append(row)
-
     def get_save_url(self, id, advertiser_id=None):
         return "{0}/{1}/item".format(self.get_url(), id)
 
     def get_search_url(self, id, term):
         return "{0}/{1}/item?search={2}".format(self.get_url(), id, term)
 
-    def save(self, data):
+    def find_by_list_id(self, list_id):
+        response = self._execute("GET", "{0}/{1}/item".format(self.get_url(), list_id), None)
+
+        results = []
+        if response:
+            results = self._get_response_objects(response)
+
+        return results
+        
+
+    def save(self):
         payload = {
             "inventory-list-items": self.data.get("inventory-list-items")
         }
 
-        response = self._execute("PUT", self.get_save_url(data.get('id')), json.dumps(payload))
+        response = self._execute("POST", self.get_save_url(self.data.get('id')), json.dumps(payload))
         obj = self._get_response_object(response)
         return obj
+

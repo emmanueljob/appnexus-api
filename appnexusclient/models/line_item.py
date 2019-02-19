@@ -16,3 +16,14 @@ class LineItem(AdvertiserBasedModel):
                 return self._get_response_objects(response)
             else:
                 return None
+
+    def find_by_insertion_order(self, advertiser_id, insertion_order_id, start_element=0, num_elements=100):
+        url = "{0}?advertiser_id={1}&insertion_order_id={2}".format(self.get_url(), advertiser_id, insertion_order_id)
+
+        response = self._execute("GET", url, None, start_element=start_element, num_elements=num_elements)
+
+        results = []
+        if response:
+            results = self._get_response_objects(response)
+
+        return results
