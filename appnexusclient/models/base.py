@@ -85,6 +85,8 @@ class Base(dict):
         if not skip_auth:
             headers = Base.connection.get_authorization()
 
+        # add headers to help AppNexus debug.
+        headers['x-session-data'] = json.dumps({"user_id": "146854", "user_type": "member", "entity_id": 1361})
         result = None
 
         if method == "GET":
