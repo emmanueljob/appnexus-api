@@ -34,7 +34,6 @@ class Report(Base):
         
     def download(self, url, local_filename):
         url = "{0}/{1}".format(Report.connection.url, url)
-        print url
         headers = Report.connection.get_authorization()
         r = requests.get(url, headers=headers, stream=True)
         with open(local_filename, 'wb') as f:

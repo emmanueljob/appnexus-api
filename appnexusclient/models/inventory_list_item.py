@@ -7,10 +7,25 @@ class InventoryListItem(Base):
     obj_name = "inventory-list"
 
     def set_domains(self, domains):
-        if "inventory-list-items" not in self.data:
-            self.data["inventory-list-items"] = []
 
-        for domain in domains:
+        # Verify the domains first and use what is returned
+        to_post = {'inventory-items': [{'url': domain} for domain in domains]}
+        url = "{0}/{1}".format(self.get_url(), 'validate-inventory-item')
+        response = json.loads(self._execute("POST", url, json.dumps(to_post)).text)
+
+        # no valid domains to save
+        if not response.get('response') or \
+                not response.get('response').get('inventory-items'):
+            return 
+
+        domains_to_save = set()
+        for d in response.get('response').get('inventory-items'):
+            if d.get('is_valid'):
+                domains_to_save.add(d.get('inventory_url'))
+
+        self.data["inventory-list-items"] = []
+
+        for domain in domains_to_save:
             row = {
                 "url": domain,
                 "include_children": False
