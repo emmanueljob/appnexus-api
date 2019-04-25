@@ -91,7 +91,7 @@ class CampaignTest(Base):
         campaign_id = 11862543
         loader = Campaign(CampaignTest.conn)
         campaign = loader.find_one(campaign_id, advertiser_id)
-        print campaign
-        print "!!!!!"
+        print(campaign)
+        print("!!!!!")
         assert campaign_id == campaign.get('id')
 

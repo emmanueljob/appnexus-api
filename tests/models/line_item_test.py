@@ -24,6 +24,6 @@ class LineItemTest(Base):
         line_items = loader.find_by_insertion_order(adv_id, io_id)
 
         for line_item in line_items:
-            print json.dumps(line_item, indent=2)
+            print(json.dumps(line_item, indent=2))
 
         assert len(line_items) > 0

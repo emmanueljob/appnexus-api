@@ -95,16 +95,16 @@ class Base(dict):
                     url = "{0}&start_element={1}&num_elements={2}".format(url, start_element, num_elements)
                 else:
                     url = "{0}?start_element={1}&num_elements={2}".format(url, start_element, num_elements)
-            print "curl -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url)
+            print("curl -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url))
             result = requests.get(url, headers=headers)
         elif method == "POST":
-            print "curl -XPOST -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers.get('Authorization', ''), payload, url)
+            print("curl -XPOST -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers.get('Authorization', ''), payload, url))
             result = requests.post(url, headers=headers, data=payload)
         elif method == "PUT":
-            print "curl -XPUT -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers.get('Authorization', ''), payload, url)
+            print("curl -XPUT -H 'Authorization: {0}' -d '{1}' '{2}'".format(headers.get('Authorization', ''), payload, url))
             result = requests.put(url, headers=headers, data=payload)
         elif method == "DELETE":
-            print "curl -XDELETE -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url)
+            print("curl -XDELETE -H 'Authorization: {0}' '{1}'".format(headers.get('Authorization', ''), url))
             result = requests.delete(url, headers=headers)
         else:
             raise Exception("Unknown method")
@@ -148,13 +148,13 @@ class Base(dict):
         return json.dumps(rval)
 
     def import_props(self, props):
-        for key, value in props.iteritems():
+        for key, value in props.items():
             self[key] = value
 
     def export_props(self):
         rval = {}
         # do this an obvious way because using __dict__ gives us params we dont need.
-        for key, value in self.iteritems():
+        for key, value in self.items():
             rval[key] = value
 
         return rval

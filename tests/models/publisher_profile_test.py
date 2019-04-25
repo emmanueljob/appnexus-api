@@ -9,7 +9,7 @@ class TestPublisherProfile(Base):
     def test_profile_create(self):
         profile = PublisherProfile(TestPublisherProfile.conn)
         result = profile.create_profile(169883, 1808327)
-        print 'RESULT: ', result
+        print('RESULT: ', result)
 
     # def test_find(self):
     #     profile = PublisherProfile(TestPublisherProfile.conn)
