@@ -26,5 +26,5 @@ class ProfileTest(Base):
         advertiser_id = 454980
         loader = Profile(ProfileTest.conn)
         profile = loader.find_one(profile_id, advertiser_id)
-        print profile
+        print(profile)
         assert profile_id == profile.get('id')
