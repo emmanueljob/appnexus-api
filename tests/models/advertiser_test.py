@@ -9,6 +9,6 @@ class AdvertiserTest(Base):
 
     def testGet(self):
         loader = Advertiser(AdvertiserTest.conn)
-        advs = loader.find()
-        for adv in advs:
+        advs = json.loads(loader.find())
+        for adv in advs.get('data').get('response').get('advertisers'):
             assert adv.get('name') is not None

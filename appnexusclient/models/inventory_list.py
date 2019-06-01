@@ -34,8 +34,8 @@ class InventoryList(Base):
         if obj.get('response').get('status') == "OK":
             pass
         else:
-            print response.text
-            print json.dumps(obj, indent=2)
+            print(response.text)
+            print(json.dumps(obj, indent=2))
             raise Exception("Bad response code")
 
         return True

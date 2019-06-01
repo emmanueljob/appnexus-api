@@ -49,8 +49,8 @@ class Connection:
         try:
             response = requests.post(auth_url, data=json.dumps(credentials))
         except Exception as e:
-            print "EXCEPTION"
-            print e
+            print("EXCEPTION")
+            print(e)
             raise e
 
         if response is not None:

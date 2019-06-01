@@ -48,14 +48,14 @@ class ReportTest(Base):
 
         report_id = loader.run_report(params)
         assert report_id != None
-        print report_id
+        print(report_id)
 
     def testGetDownloadUrl(self):
         loader = Report(ReportTest.conn)
         id = "4f283b5ed25d8aee2e4d0fc16597aef9"
         url = loader.get_download_url(id)
         assert url != None
-        print url
+        print(url)
         
     def testDownload(self):
         loader = Report(ReportTest.conn)

@@ -11,9 +11,10 @@ class LineItemTest(Base):
         adv_id = 482212
 
         loader = LineItem(LineItemTest.conn)
-        line_items = loader.find_by_advertiser(adv_id)
-
-        assert len(line_items) > 1
+        line_items = json.loads(loader.find_by_advertiser(adv_id))
+        for li in line_items.get('data').get('response').get('line-items'):
+            assert li.get('id') > 1
+            assert li.get('advertiser').get('id') == adv_id
 
 
     def testSearchByInsertionOrder(self):
@@ -21,9 +22,13 @@ class LineItemTest(Base):
         io_id = 1030212
 
         loader = LineItem(LineItemTest.conn)
-        line_items = loader.find_by_insertion_order(adv_id, io_id)
+        line_items = json.loads(loader.find_by_insertion_order(adv_id, io_id))
 
-        for line_item in line_items:
-            print json.dumps(line_item, indent=2)
-
-        assert len(line_items) > 0
+        for li in line_items.get('data').get('response').get('line-items'):
+            assert li.get('advertiser').get('id') == adv_id
+            found = False
+            for io in li.get('insertion_orders'):
+                if io.get('id') == io_id:
+                    found = True
+            if not found:
+                assert "IO NOT FOUND" == "FOR THIS LI"
