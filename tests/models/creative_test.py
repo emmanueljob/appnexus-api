@@ -43,20 +43,20 @@ class CreativeTest(Base):
         creative_id = 44122663
         loader = Creative(CreativeTest.conn)
         creative = loader.find_one(creative_id, 176051)
-        print creative
+        print(creative)
         assert creative_id == creative.get('id')
 
     def testGetOneTemplate(self):
         loader = Template(CreativeTest.conn)
         template = loader.find(1)
-        print template
+        print(template)
 
     def testGetTemplates(self):
         loader = Template(CreativeTest.conn)
         templates = loader.get_standard_only()
         for template in templates:
-            print "$$$$$$$$$$$$$$$$$$$$$$$"
-            print template
-            print "$$$$$$$$$$$$$$$$$$$$$$$"
+            print("$$$$$$$$$$$$$$$$$$$$$$$")
+            print(template)
+            print("$$$$$$$$$$$$$$$$$$$$$$$")
             assert template.get('id') is not None
 

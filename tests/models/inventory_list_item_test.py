@@ -28,13 +28,13 @@ class InventoryListItemTest(Base):
         inventory_list_item = InventoryListItem(InventoryListItemTest.conn, data)
         
         domains = get_domains()
-        print domains[0]
+        print(domains[0])
         cleaned = []
         for domain in domains:
             cleaned.append(domain['url'])
         inventory_list_item.set_domains(cleaned)
         response = inventory_list_item.save()
-        print response
+        print(response)
 
         #assert len(line_items) > 1
 
